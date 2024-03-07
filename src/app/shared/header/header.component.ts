@@ -1,21 +1,17 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {RouterLink} from "@angular/router";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, RouterLink, MatButtonModule, MatIconModule],
+  imports: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-  @Output() onClickEvent = new EventEmitter();
+export class HeaderComponent implements OnInit {
 
-  onCLick() {
-    this.onClickEvent.emit('');
+  constructor() { }
+
+  ngOnInit(): void {
   }
 
 }

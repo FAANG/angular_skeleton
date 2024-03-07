@@ -1,6 +1,13 @@
-<mat-toolbar>
-  <button mat-icon-button (click)="onCLick()"><mat-icon>menu</mat-icon></button>
-  <span><a routerLink="/">My Application Header</a></span>
-  <span class="example-spacer"></span>
-  <a routerLink="/data_portal"><span>Data Portal</span></a>
-</mat-toolbar>
+<nav class="navbar navbar-light bg-light navbar-expand-lg fixed-top">
+  <a href="#" class="navbar-brand">Angular 10 seed project</a>
+  <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="navbar-item">
+        <a href="#" class="nav-link">Navigation Bar</a>
+      </li>
+    </ul>
+  </div>
+</nav>
