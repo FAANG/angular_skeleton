@@ -1,4 +1,4 @@
-import { OnInit, Component, ViewChild} from '@angular/core';
+import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Sample, samples } from '../model/dashboard.model';
