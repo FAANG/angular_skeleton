@@ -1,6 +1,6 @@
 {
-  "name": "vdc-angular",
-  "short_name": "vdc-angular",
+  "name": "angular-skeleton",
+  "short_name": "angular-skeleton",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'vdc-angular' title`, () => {
+  it(`should have the 'angular-skeleton' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('vdc-angular');
+    expect(app.title).toEqual('angular-skeleton');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, vdc-angular');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-skeleton');
   });
 });

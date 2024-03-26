@@ -12,19 +12,19 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$vdc-angular-primary: mat.define-palette(mat.$indigo-palette);
-$vdc-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$angular-skeleton-primary: mat.define-palette(mat.$indigo-palette);
+$angular-skeleton-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$vdc-angular-warn: mat.define-palette(mat.$red-palette);
+$angular-skeleton-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$vdc-angular-theme: mat.define-light-theme((
+$angular-skeleton-theme: mat.define-light-theme((
   color: (
-    primary: $vdc-angular-primary,
-    accent: $vdc-angular-accent,
-    warn: $vdc-angular-warn,
+    primary: $angular-skeleton-primary,
+    accent: $angular-skeleton-accent,
+    warn: $angular-skeleton-warn,
   ),
   typography: mat.define-typography-config(),
   density: 0
@@ -33,5 +33,5 @@ $vdc-angular-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($vdc-angular-theme);
+@include mat.all-component-themes($angular-skeleton-theme);
 
