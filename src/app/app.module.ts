@@ -5,17 +5,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { routes } from "./app.routes";
+import { HttpClientModule } from "@angular/common/http";
+import { DashboardModule } from "./dashboard/dashboard.module";
 
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
+    RouterModule.forRoot(routes),
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    HttpClientModule,
+    DashboardModule
   ]
 })
 export class AppModule { }
