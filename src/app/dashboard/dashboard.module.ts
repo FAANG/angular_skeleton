@@ -8,19 +8,25 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCard } from "@angular/material/card";
+import { MatFormField } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
-  declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatPaginatorModule
-  ]
+    declarations: [DashboardComponent],
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSortModule,
+        MatTableModule,
+        MatTooltipModule,
+        MatPaginatorModule,
+        MatCard,
+        MatFormField,
+        MatInputModule
+    ]
 })
 export class DashboardModule { }
