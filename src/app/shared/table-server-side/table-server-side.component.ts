@@ -2,11 +2,8 @@ import { Component, Input, Output, AfterViewInit, ViewChild, EventEmitter, OnIni
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup } from '@angular/forms';
-import { merge, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { of as observableOf } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { ApiDataService } from '../../services/api-data.service';
 import { Sample, samples } from "../../dashboard/model/dashboard.model";
 
@@ -21,17 +18,11 @@ export class TableServerSideComponent implements OnInit, AfterViewInit {
     dataSource = new MatTableDataSource<Sample>(samples);
     @Output() dataUpdate = new EventEmitter<any>();
     @Input() indexDetails: any;
-    apiKey: string | undefined;
-    totalHits = 0;
-    subscriptionForm: FormGroup | undefined;
     loading = false;
-    @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort: MatSort | undefined;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        public dialog: MatDialog,
         private dataService: ApiDataService
     ) {}
 
@@ -40,6 +31,7 @@ export class TableServerSideComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
         return this.dataService.getData(this.dataSource).pipe(
             catchError(() => {
                 this.loading = false;

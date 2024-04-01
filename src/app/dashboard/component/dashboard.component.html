@@ -1,29 +1,26 @@
-<div class="container" style="padding-top: 65px;">
-    <div class="row">
-
-        <div class="col-md-2">
-            <div class="row">
-                <div class="col-12">
-                    <mat-card class="bg-lite mb-3 filter-top">
-                        <h6 mat-card-header>Column 1 Filter</h6>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Filter</mat-label>
-                            <input matInput (input)="tableServerSide.applyFilter($event, 'column1')" placeholder="Filter">
-                        </mat-form-field>
-                    </mat-card>
-                </div>
-                <div class="col-12">
-                    <mat-card class="bg-lite mb-3 filter-top">
-                        <h6 mat-card-header>Column 2 Filter</h6>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Filter</mat-label>
-                            <input matInput (input)="tableServerSide.applyFilter($event, 'column2')" placeholder="Filter">
-                        </mat-form-field>
-                    </mat-card>
-                </div>
-            </div>
+<div class="dashboard-container" style="padding-top: 65px;">
+    <div class="containers-flex">
+        <div class="filters-container">
+            <mat-card class="filter">
+                <h6 mat-card-header>Column 1 Filter 1</h6>
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (input)="tableServerSide.applyFilter($event, 'column1')" placeholder="Filter">
+                </mat-form-field>
+                <h6 mat-card-header>Column 1 Filter 2</h6>
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (input)="tableServerSide.applyFilter($event, 'column1')" placeholder="Filter">
+                </mat-form-field>
+            </mat-card>
+            <mat-card class="filter">
+                <h6 mat-card-header>Column 2 Filter</h6>
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (input)="tableServerSide.applyFilter($event, 'column2')" placeholder="Filter">
+                </mat-form-field>
+            </mat-card>
         </div>
         <app-table-server-side #tableServerSide></app-table-server-side>
-
     </div>
 </div>

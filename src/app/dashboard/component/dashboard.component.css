@@ -1,3 +1,37 @@
-.filter-top {
-    margin-top: 1rem !important;
+.dashboard-container {
+    padding-top: 65px;
+    padding-left: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+}
+
+.containers-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-card {
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+h6 {
+    font-size: 14px;
 }
