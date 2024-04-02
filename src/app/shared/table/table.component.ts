@@ -8,13 +8,14 @@ import {
   MatTable,
   MatTableDataSource
 } from "@angular/material/table";
+import {catchError} from "rxjs/operators";
+import {of as observableOf} from "rxjs";
+import {NgForOf, TitleCasePipe} from "@angular/common";
+
 import {Sample, samples} from "../../samples";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {ApiDataService} from "../../services/api-data.service";
-import {catchError} from "rxjs/operators";
-import {of as observableOf} from "rxjs";
-import {NgForOf, TitleCasePipe} from "@angular/common";
 
 
 @Component({
