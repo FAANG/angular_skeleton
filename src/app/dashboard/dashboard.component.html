@@ -1,26 +1,43 @@
-<div class="dashboard-container" style="padding-top: 65px;">
-    <div class="containers-flex">
-        <div class="filters-container">
-            <mat-card class="filter">
-                <h6 mat-card-header>Column 1 Filter 1</h6>
+<div class="containers-flex">
+
+    <div class="container-filters">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Column 1 Filter 1</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <mat-form-field appearance="fill">
                     <mat-label>Filter</mat-label>
                     <input matInput (input)="tableServerComponent?.applyFilter($event, 'column1')" placeholder="Filter">
                 </mat-form-field>
-                <h6 mat-card-header>Column 1 Filter 2</h6>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Column 1 Filter 2</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <mat-form-field appearance="fill">
                     <mat-label>Filter</mat-label>
                     <input matInput (input)="tableServerComponent?.applyFilter($event, 'column1')" placeholder="Filter">
                 </mat-form-field>
-            </mat-card>
-            <mat-card class="filter">
-                <h6 mat-card-header>Column 2 Filter</h6>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Column 2 Filter</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <mat-form-field appearance="fill">
                     <mat-label>Filter</mat-label>
                     <input matInput (input)="tableServerComponent?.applyFilter($event, 'column2')" placeholder="Filter">
                 </mat-form-field>
-            </mat-card>
-        </div>
-        <app-table></app-table>
+            </mat-card-content>
+        </mat-card>
     </div>
+
+    <app-table></app-table>
+
 </div>
