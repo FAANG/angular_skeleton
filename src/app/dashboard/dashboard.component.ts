@@ -5,6 +5,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 
 import {TableComponent} from "../shared/table/table.component";
+import {GridTableComponent} from "../shared/grid-table/grid-table.component";
 
 
 @Component({
@@ -19,7 +20,8 @@ import {TableComponent} from "../shared/table/table.component";
     MatCardHeader,
     MatCardActions,
     MatCardTitle,
-    MatCardContent
+    MatCardContent,
+    GridTableComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

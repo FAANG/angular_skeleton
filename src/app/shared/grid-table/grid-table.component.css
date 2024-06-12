@@ -1,0 +1,20 @@
+.grid-table {
+    display: grid;
+    grid-template-columns: 100px 150px auto 1fr;
+    gap: 5px;
+}
+
+.cell {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.header {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.row:nth-child(even) {
+    background-color: #f9f9f9;
+}

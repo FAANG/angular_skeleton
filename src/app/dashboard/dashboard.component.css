@@ -13,3 +13,7 @@
 app-table {
     flex: 1;
 }
+
+.grid-table-wrapper {
+    margin-top: 60px;
+}
