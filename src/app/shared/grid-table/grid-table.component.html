@@ -1,21 +1,8 @@
 <div class="grid-table">
-    <div class="header cell">Column 1</div>
-    <div class="header cell">Column 2</div>
-    <div class="header cell">Column 3</div>
-    <div class="header cell">Column 4</div>
-
-    <div class="row cell">Row 1, Cell 1</div>
-    <div class="row cell">Row 1, Cell 2</div>
-    <div class="row cell">Row 1, Cell 3</div>
-    <div class="row cell">Row 1, Cell 4</div>
-
-    <div class="row cell">Row 2, Cell 1</div>
-    <div class="row cell">Row 2, Cell 2</div>
-    <div class="row cell">Row 2, Cell 3</div>
-    <div class="row cell">Row 2, Cell 4</div>
-
-    <div class="row cell">Row 3, Cell 1</div>
-    <div class="row cell">Row 3, Cell 2</div>
-    <div class="row cell">Row 3, Cell 3</div>
-    <div class="row cell">Row 3, Cell 4</div>
+    <div class="header cell" *ngFor="let column of displayedColumns"> {{ column | titlecase }} </div>
+    <div class="row" *ngFor="let row of dataSource.data">
+        <div class="cell" *ngFor="let column of displayedColumns">
+            {{ row[column] }}
+        </div>
+    </div>
 </div>

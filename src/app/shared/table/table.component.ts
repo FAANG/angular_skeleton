@@ -54,7 +54,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit() {

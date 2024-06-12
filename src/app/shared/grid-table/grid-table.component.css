@@ -4,15 +4,15 @@
     gap: 5px;
 }
 
+.header {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
 .cell {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: center;
-}
-
-.header {
-    background-color: #f4f4f4;
-    font-weight: bold;
 }
 
 .row:nth-child(even) {
