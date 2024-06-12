@@ -14,6 +14,7 @@ import {of as observableOf} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NgForOf, TitleCasePipe} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-grid-table',
@@ -32,7 +33,8 @@ import {NgForOf, TitleCasePipe} from "@angular/common";
     NgForOf,
     TitleCasePipe,
     MatColumnDef,
-    MatHeaderCellDef
+    MatHeaderCellDef,
+    RouterLink
   ],
   templateUrl: './grid-table.component.html',
   styleUrl: './grid-table.component.css'

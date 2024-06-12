@@ -2,7 +2,7 @@
     <div class="header cell" *ngFor="let column of displayedColumns"> {{ column | titlecase }} </div>
     <div class="row" *ngFor="let row of dataSource.data">
         <div class="cell" *ngFor="let column of displayedColumns">
-            {{ row[column] }}
+            <a [routerLink]="['/item', row[column]]">{{ row[column] }}</a>
         </div>
     </div>
 </div>
