@@ -1,1 +1,11 @@
-<p>item works!</p>
+<ng-container *ngIf="pdfSrc">
+    <iframe [src]="pdfSrc"></iframe>
+</ng-container>
+<ng-container *ngIf="imgSrc">
+    <img [ngSrc]="imgSrc" width="400" height="400" alt="Image" />
+</ng-container>
+<ng-container *ngIf="!pdfSrc || !imgSrc">
+    <p *ngIf="!pdfSrc && imgSrc">PDF Not Found.</p>
+    <p *ngIf="!imgSrc && pdfSrc">Image Not Found.</p>
+    <p *ngIf="!pdfSrc && !imgSrc">PDF and Image Not Found.</p>
+</ng-container>
