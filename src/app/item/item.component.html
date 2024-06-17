@@ -1,6 +1,6 @@
-<ng-container *ngIf="imgSrc">
-    <img [ngSrc]="imgSrc" width="1000" height="800" alt="Image" />
-</ng-container>
-<ng-container *ngIf="!imgSrc">
-    <p>Image Not Found.</p>
-</ng-container>
+<div *ngIf="imgSrc; else errorTemplate">
+    <img [src]="imgSrc" width="1000" height="800" alt="Loaded Image">
+</div>
+<ng-template #errorTemplate>
+    <div *ngIf="loadingError">{{ loadingError }}</div>
+</ng-template>

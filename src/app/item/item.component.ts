@@ -18,6 +18,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ItemComponent implements OnInit {
   itemId: string | null = null;
   imgSrc: SafeResourceUrl | null | undefined;
+  loadingError: string | null = null;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,
               private sanitizer: DomSanitizer) {}
@@ -25,8 +26,38 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
     this.itemId = this.route.snapshot.paramMap.get('id');
     if (this.itemId) {
-      this.setFileSource(`assets/imgs/${this.itemId}.jpg`, 'img');
+      this.loadImage(`assets/imgs/${this.itemId}.jpg`);
     }
+  }
+
+  private loadImage(imageUrl: string): void {
+    if (typeof Worker !== 'undefined') {
+      const worker = new Worker(new URL('../app.worker', import.meta.url));
+      worker.onmessage = ({ data }) => {
+        if (data.error) {
+          this.loadingError = data.error;
+          this.imgSrc = null;
+        } else {
+          this.imgSrc = this.sanitizer.bypassSecurityTrustResourceUrl(data as string);
+        }
+      };
+      worker.postMessage({ imageUrl });
+    } else {
+      console.log('Web Workers are not supported in this environment.');
+      this.fallbackLoadImage(imageUrl);
+    }
+  }
+
+  private fallbackLoadImage(imageUrl: string): void {
+    this.http.get(imageUrl, { responseType: 'blob' }).subscribe(blob => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.imgSrc = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result as string);
+      };
+      reader.readAsDataURL(blob);
+    }, error => {
+      this.loadingError = 'Failed to load image';
+    });
   }
 
   private setFileSource(path: string, type: 'img'): void {
