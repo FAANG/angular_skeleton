@@ -17,7 +17,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ItemComponent implements OnInit {
   itemId: string | null = null;
-  pdfSrc: SafeResourceUrl | null | undefined;
   imgSrc: SafeResourceUrl | null | undefined;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,
@@ -26,16 +25,13 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
     this.itemId = this.route.snapshot.paramMap.get('id');
     if (this.itemId) {
-      this.setFileSource(`assets/pdfs/${this.itemId}.pdf`, 'pdf');
       this.setFileSource(`assets/imgs/${this.itemId}.jpg`, 'img');
     }
   }
 
-  private setFileSource(path: string, type: 'pdf' | 'img'): void {
+  private setFileSource(path: string, type: 'img'): void {
     this.checkFileExistence(path).then(exists => {
-      if (type === 'pdf') {
-        this.pdfSrc = exists ? this.sanitizer.bypassSecurityTrustResourceUrl(path) : null;
-      } else if (type === 'img') {
+      if (type === 'img') {
         this.imgSrc = exists ? this.sanitizer.bypassSecurityTrustResourceUrl(path) : null;
       }
     });
