@@ -1,0 +1,20 @@
+.example-card {
+  margin-left: 5px;
+  margin-bottom:15px;
+  margin-right: 5px;
+}
+
+table {
+  margin-right: 10px;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.example-container {
+  width: auto;
+  height: 100%;
+  margin: 10px;
+}
