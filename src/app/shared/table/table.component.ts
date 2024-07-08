@@ -42,6 +42,13 @@ import {ApiDataService} from "../../services/api-data.service";
 })
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['column1', 'column2', 'column3', 'column4', 'column5'];
+  columnHeaders: { [key: string]: string } = {
+    'column1': 'BioSample ID',
+    'column2': 'Sex',
+    'column3': 'Organism',
+    'column4': 'Breed',
+    'column5': 'Standard'
+  };
   dataSource = new MatTableDataSource<Sample>(samples);
   @Output() dataUpdate = new EventEmitter<any>();
   @Input() indexDetails: any;
@@ -54,6 +61,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit() {
