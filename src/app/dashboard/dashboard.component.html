@@ -1,43 +1,28 @@
 <div class="containers-flex">
 
     <div class="container-filters">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Column 1 Filter 1</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="fill">
-                    <mat-label>Filter</mat-label>
-                    <input matInput (input)="tableServerComponent?.applyFilter($event, 'column1')" placeholder="Filter">
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Column 1 Filter 2</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="fill">
-                    <mat-label>Filter</mat-label>
-                    <input matInput (input)="tableServerComponent?.applyFilter($event, 'column1')" placeholder="Filter">
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Column 2 Filter</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field appearance="fill">
-                    <mat-label>Filter</mat-label>
-                    <input matInput (input)="tableServerComponent?.applyFilter($event, 'column2')" placeholder="Filter">
-                </mat-form-field>
-            </mat-card-content>
-        </mat-card>
+        <app-filter title="Sex" [filterSize]=2></app-filter>
+        <app-filter title="Organism" [filterSize]=3></app-filter>
+        <app-filter title="Breed" [filterSize]=3></app-filter>
+        <app-filter title="Standard" [filterSize]=6></app-filter>
     </div>
 
-    <app-table></app-table>
+    <div class="table-container">
+        <div fxFlex="83" class="table-responsive">
+            <div *ngIf="hasActiveFilters()">
+                <app-active-filter *ngIf="hasActiveFilters()"></app-active-filter>
+                <button mat-raised-button (click)="removeFilter()">Remove all filters</button>
+                <button mat-raised-button
+                        matTooltip="Subscribe to selected Analysis entries"
+                        (click)="openSubscriptionDialog()">
+                    <div class="subscription-icon">
+                        <mat-icon>email</mat-icon>
+                    </div>
+                </button>
+                <hr>
+            </div>
+        </div>
+        <app-table></app-table>
+    </div>
 
 </div>

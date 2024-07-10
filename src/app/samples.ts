@@ -1,94 +1,94 @@
 export interface Sample {
-    column1: string;
-    column2: string;
-    column3: string;
-    column4: string;
-    column5: string;
+    biosample_id: string;
+    sex: string;
+    organism: string;
+    breed: string;
+    standard: string;
 }
 
 export const samples: Sample[] = [
     {
-        column1: 'SAMEA4451615',
-        column2: 'male genotypic sex',
-        column3: 'Bos taurus',
-        column4: 'Cattle crossbreed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4451615',
+        sex: 'male genotypic sex',
+        organism: 'Bos taurus',
+        breed: 'Cattle crossbreed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4451620',
-        column2: 'female genotypic sex',
-        column3: 'Bos taurus',
-        column4: 'Cattle crossbreed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4451620',
+        sex: 'female genotypic sex',
+        organism: 'Bos taurus',
+        breed: 'Cattle crossbreed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4447238',
-        column2: 'male',
-        column3: 'Gallus gallus',
-        column4: 'chicken breed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4447238',
+        sex: 'male',
+        organism: 'Gallus gallus',
+        breed: 'chicken breed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4447320',
-        column2: 'male',
-        column3: 'Gallus gallus',
-        column4: 'chicken breed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4447320',
+        sex: 'male',
+        organism: 'Gallus gallus',
+        breed: 'chicken breed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4447338',
-        column2: 'male',
-        column3: 'Gallus gallus',
-        column4: 'chicken breed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4447338',
+        sex: 'male',
+        organism: 'Gallus gallus',
+        breed: 'chicken breed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4447345',
-        column2: 'male',
-        column3: 'Gallus gallus',
-        column4: 'chicken breed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4447345',
+        sex: 'male',
+        organism: 'Gallus gallus',
+        breed: 'chicken breed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA4447355',
-        column2: 'male',
-        column3: 'Gallus gallus',
-        column4: 'chicken breed',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA4447355',
+        sex: 'male',
+        organism: 'Gallus gallus',
+        breed: 'chicken breed',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA7178057',
-        column2: 'male',
-        column3: 'Sus scrofa',
-        column4: 'Large white sire x Landrace dam',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA7178057',
+        sex: 'male',
+        organism: 'Sus scrofa',
+        breed: 'Large white sire x Landrace dam',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA7178064',
-        column2: 'male',
-        column3: 'Sus scrofa',
-        column4: 'Large white sire x Landrace dam',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA7178064',
+        sex: 'male',
+        organism: 'Sus scrofa',
+        breed: 'Large white sire x Landrace dam',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA7178074',
-        column2: 'male',
-        column3: 'Sus scrofa',
-        column4: 'Large white sire x Landrace dam',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA7178074',
+        sex: 'male',
+        organism: 'Sus scrofa',
+        breed: 'Large white sire x Landrace dam',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA7178078',
-        column2: 'male',
-        column3: 'Sus scrofa',
-        column4: 'Large white sire x Landrace dam',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA7178078',
+        sex: 'male',
+        organism: 'Sus scrofa',
+        breed: 'Large white sire x Landrace dam',
+        standard: 'FAANG'
     },
     {
-        column1: 'SAMEA7178081',
-        column2: 'male',
-        column3: 'Sus scrofa',
-        column4: 'Large white sire x Landrace dam',
-        column5: 'FAANG'
+        biosample_id: 'SAMEA7178081',
+        sex: 'male',
+        organism: 'Sus scrofa',
+        breed: 'Large white sire x Landrace dam',
+        standard: 'FAANG'
     }
 ];
