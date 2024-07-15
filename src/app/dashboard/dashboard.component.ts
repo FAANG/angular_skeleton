@@ -28,10 +28,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild(TableComponent, { static: true }) tableServerComponent: TableComponent | undefined;
   filter_field: any;
   subscriber = { email: '', title: '', indexName: '', indexKey: ''};
-  columnNames: string[] = ['BioSample ID', 'Sex', 'Organism', 'Breed', 'Standard'];
   aggrSubscription: Subscription | undefined;
-  filterSubscription: Subscription | undefined;
-  indexDetails: {} | undefined;
 
   query = {
     sort: ['id_number', 'desc'],
@@ -48,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
       private titleService: Title, private router: Router, private filterStateService: FilterStateService,
-      private dialogModel: MatDialog, private activatedRoute: ActivatedRoute, private aggregationService: AggregationService) { }
+      private activatedRoute: ActivatedRoute, private aggregationService: AggregationService) { }
 
   ngOnInit(): void {
     this.titleService.setTitle('Dashboard');
@@ -56,28 +53,15 @@ export class DashboardComponent implements OnInit {
       this.filterStateService.resetFilter();
       this.loadInitialPageState(params);
     });
-
-    this.filterSubscription = this.filterStateService.filtersChanged.subscribe((filters: any) => {
-      this.query.filters = filters;
-      this.applyFilters();
-    });
-
     if (this.tableServerComponent) {
       this.tableServerComponent.dataUpdate.subscribe((data) => {
         this.aggregationService.getAggregations(data);
       });
       this.tableServerComponent.sortUpdate.subscribe((sortParams) => {
         this.query.sort = sortParams;
-        this.applyFilters();
       });
     }
     this.aggrSubscription = this.filterStateService.updateUrlParams(this.query, ['dashboard']);
-  }
-
-  applyFilters() {
-    if (this.tableServerComponent) {
-      this.tableServerComponent.applyFilters(this.query.filters, this.query.search);
-    }
   }
 
   hasActiveFilters() {
@@ -96,13 +80,10 @@ export class DashboardComponent implements OnInit {
     this.filterStateService.resetFilter();
     this.filter_field = {};
     this.router.navigate(['dashboard'], {queryParams: {}, replaceUrl: true, skipLocationChange: false});
-    this.applyFilters();
   }
 
   openSubscriptionDialog() {
     this.subscriber.title = 'Subscribing to dashboard'
-    //this.subscriber.indexName = this.indexDetails['index'];
-    //this.subscriber.indexKey = this.indexDetails['indexKey'];
   }
 
   loadInitialPageState(params: any) {
@@ -116,6 +97,5 @@ export class DashboardComponent implements OnInit {
     if (params['sortTerm'] && params['sortDirection']) {
       this.query.sort = [params['sortTerm'], params['sortDirection']];
     }
-    this.applyFilters();
   }
 }

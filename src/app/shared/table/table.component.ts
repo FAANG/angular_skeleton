@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatCellDef, MatHeaderRowDef, MatRowDef, MatTable, MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { NgForOf, TitleCasePipe, CommonModule } from "@angular/common";
 import { Subscription } from 'rxjs';
@@ -25,7 +25,9 @@ import { FilterStateService } from '../../services/filter-state.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  @Input() filters: any = {};
+  @Input() search: string = '';
   @Output() dataUpdate = new EventEmitter<any>();
   @Output() sortUpdate = new EventEmitter<any>();
   displayedColumns: string[] = ['biosample_id', 'sex', 'organism', 'breed', 'standard'];
@@ -37,7 +39,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     'standard': 'Standard'
   };
   dataSource = new MatTableDataSource<Sample>();
-  loading = false;
   private filtersSubscription: Subscription | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
@@ -47,7 +48,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.loadData();
     this.filtersSubscription = this.filterStateService.filtersChanged.subscribe(filters => {
-      this.loadData(filters);
+      this.loadData(filters, this.search);
     });
   }
 
@@ -60,15 +61,17 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['filters'] || changes['search']) {
+      this.loadData(this.filters, this.search);
+    }
+  }
+
   loadData(filters: any = {}, search: string = '') {
     this.dataService.getData(filters, search).subscribe(data => {
       this.dataSource.data = data;
       this.dataUpdate.emit(this.dataSource.data);
     });
-  }
-
-  applyFilters(filters: any, search: string) {
-    this.loadData(filters, search);
   }
 
   ngOnDestroy() {

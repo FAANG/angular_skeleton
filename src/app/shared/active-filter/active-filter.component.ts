@@ -23,7 +23,7 @@ export class ActiveFilterComponent implements OnInit {
   aggs: string[] = [];
   data: AggregationData = { sex: [], organism: [], breed: [], standard: [] };
 
-  constructor(private aggregationService: AggregationService, private filterStateService: FilterStateService) { }
+  constructor(private aggregationService: AggregationService) { }
 
   ngOnInit() {
     this.aggs = this.aggregationService.current_active_filters;
@@ -48,6 +48,5 @@ export class ActiveFilterComponent implements OnInit {
     });
 
     this.aggregationService.field.next(this.aggregationService.active_filters);
-    this.filterStateService.updateActiveFilters();
   }
 }
