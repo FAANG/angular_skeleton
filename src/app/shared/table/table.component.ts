@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
 import { MatCellDef, MatHeaderRowDef, MatRowDef, MatTable, MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { NgForOf, TitleCasePipe, CommonModule } from "@angular/common";
-import { Sample } from "../../samples";
+import { Subscription } from 'rxjs';
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { Sample } from "../../samples";
 import { ApiDataService } from "../../services/api-data.service";
+import { FilterStateService } from '../../services/filter-state.service';
 
 @Component({
   selector: 'app-table',
@@ -23,7 +25,7 @@ import { ApiDataService } from "../../services/api-data.service";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() dataUpdate = new EventEmitter<any>();
   @Output() sortUpdate = new EventEmitter<any>();
   displayedColumns: string[] = ['biosample_id', 'sex', 'organism', 'breed', 'standard'];
@@ -36,13 +38,17 @@ export class TableComponent implements OnInit, AfterViewInit {
   };
   dataSource = new MatTableDataSource<Sample>();
   loading = false;
+  private filtersSubscription: Subscription | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
 
-  constructor(private dataService: ApiDataService) {}
+  constructor(private dataService: ApiDataService, private filterStateService: FilterStateService) {}
 
   ngOnInit(): void {
     this.loadData();
+    this.filtersSubscription = this.filterStateService.filtersChanged.subscribe(filters => {
+      this.loadData(filters);
+    });
   }
 
   ngAfterViewInit() {
@@ -63,5 +69,11 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   applyFilters(filters: any, search: string) {
     this.loadData(filters, search);
+  }
+
+  ngOnDestroy() {
+    if (this.filtersSubscription) {
+      this.filtersSubscription.unsubscribe();
+    }
   }
 }

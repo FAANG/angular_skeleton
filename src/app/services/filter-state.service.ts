@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
 import { AggregationService } from "./aggregation.service";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, BehaviorSubject } from "rxjs";
 
 interface QueryParams {
   [key: string]: any;
+}
+
+interface ActiveFilters {
+  sex: string[];
+  organism: string[];
+  breed: string[];
+  standard: string[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterStateService {
+  private filtersSubject = new BehaviorSubject<any>({});
+  filtersChanged = this.filtersSubject.asObservable();
+
   constructor(private aggregationService: AggregationService, private router: Router) { }
 
   updateUrlParams(queryObj: QueryParams, componentRoute: any[]): Subscription {
-    // setting urls params based on filters
     const aggrSubscription: Subscription = this.aggregationService.field.subscribe((data: any) => {
       const params: { [key: string]: any } = {};
       for (const key of Object.keys(data)) {
@@ -22,7 +31,6 @@ export class FilterStateService {
           params[key] = data[key];
         }
       }
-      // update url for search term and sorting
       if (queryObj['search']) {
         params['searchTerm'] = queryObj['search'];
       }
@@ -53,6 +61,7 @@ export class FilterStateService {
       }
     }
     this.aggregationService.field.next(this.aggregationService.active_filters);
+    this.filtersSubject.next(filters);
     return filters;
   }
 
@@ -61,5 +70,21 @@ export class FilterStateService {
       (this.aggregationService.active_filters as any)[key] = [];
     }
     this.aggregationService.current_active_filters = [];
+    this.filtersSubject.next({});
+  }
+
+  updateActiveFilters() {
+    const filters = this.getCurrentFilters();
+    this.filtersSubject.next(filters);
+  }
+
+  private getCurrentFilters() {
+    const filters: { [key in keyof ActiveFilters]?: string[] } = {};
+    for (const key in this.aggregationService.active_filters) {
+      if ((this.aggregationService.active_filters as any)[key].length > 0) {
+        filters[key as keyof ActiveFilters] = (this.aggregationService.active_filters as any)[key];
+      }
+    }
+    return filters;
   }
 }

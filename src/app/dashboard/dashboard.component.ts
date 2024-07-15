@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   subscriber = { email: '', title: '', indexName: '', indexKey: ''};
   columnNames: string[] = ['BioSample ID', 'Sex', 'Organism', 'Breed', 'Standard'];
   aggrSubscription: Subscription | undefined;
+  filterSubscription: Subscription | undefined;
   indexDetails: {} | undefined;
 
   query = {
@@ -55,6 +56,12 @@ export class DashboardComponent implements OnInit {
       this.filterStateService.resetFilter();
       this.loadInitialPageState(params);
     });
+
+    this.filterSubscription = this.filterStateService.filtersChanged.subscribe((filters: any) => {
+      this.query.filters = filters;
+      this.applyFilters();
+    });
+
     if (this.tableServerComponent) {
       this.tableServerComponent.dataUpdate.subscribe((data) => {
         this.aggregationService.getAggregations(data);
