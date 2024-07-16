@@ -1,12 +1,15 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MatCellDef, MatHeaderRowDef, MatRowDef, MatTable, MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { NgForOf, TitleCasePipe, CommonModule } from "@angular/common";
-import { Subscription } from 'rxjs';
+import { MatCellDef, MatHeaderRowDef, MatRowDef, MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { NgForOf, TitleCasePipe, CommonModule } from "@angular/common";
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Sample } from "../../samples";
 import { ApiDataService } from "../../services/api-data.service";
 import { FilterStateService } from '../../services/filter-state.service';
+import { MatFormField } from "@angular/material/form-field";
 
 @Component({
   selector: 'app-table',
@@ -19,6 +22,8 @@ import { FilterStateService } from '../../services/filter-state.service';
     MatCellDef,
     MatHeaderRowDef,
     MatRowDef,
+    MatFormField,
+    MatInputModule,
     NgForOf,
     TitleCasePipe
   ],
@@ -42,6 +47,10 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChang
   private filtersSubscription: Subscription | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
+  currentSearchTerm: string = '';
+  delaySearch: boolean = true;
+  timer: any;
+  @Input() query: Object | undefined; // query params ('sort', 'aggs', 'filters', '_source', 'from_')
 
   constructor(private dataService: ApiDataService, private filterStateService: FilterStateService) {}
 
@@ -78,5 +87,23 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChang
     if (this.filtersSubscription) {
       this.filtersSubscription.unsubscribe();
     }
+  }
+
+  searchChanged(event: KeyboardEvent) {
+    const searchFilterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    if (this.delaySearch) {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => this.applySearchFilter(searchFilterValue), 500);
+    } else {
+      this.applySearchFilter(searchFilterValue);
+    }
+  }
+
+  applySearchFilter(value: string) {
+    this.currentSearchTerm = value;
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 }
