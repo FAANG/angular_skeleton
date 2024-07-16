@@ -1,7 +1,99 @@
-.example-spacer {
-  flex: 1 1 auto;
+a {
+    font-family: Arial;
 }
 
-a:link {
-  text-decoration: none;
+.nav-link {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 18px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: black;
+}
+
+.custom-button {
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    min-width: auto;
+    outline: none;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+.custom-button:hover .nav-link {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mat-toolbar {
+    padding: 0 30px;
+}
+
+.toolbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-container {
+    margin-right: 15px;
+}
+
+.logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.menu-button {
+    display: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.mat-icon {
+    font-size: 30px;
+}
+
+@media (max-width: 960px) {
+    .nav-links {
+        display: none;
+    }
+    .menu-button {
+        display: block;
+    }
+}
+
+.menu-item {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    min-width: auto;
+    outline: none;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+.menu-item .nav-link {
+    width: 100%;
+    padding: 10px 20px;
+    text-align: left;
+    box-sizing: border-box;
+    display: block;
+}
+
+.menu-item:hover .nav-link {
+    background-color: rgba(0, 0, 0, 0.1);
 }

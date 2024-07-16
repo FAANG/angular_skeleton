@@ -5,7 +5,6 @@ import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { NgForOf, TitleCasePipe, CommonModule } from "@angular/common";
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Sample } from "../../samples";
 import { ApiDataService } from "../../services/api-data.service";
 import { FilterStateService } from '../../services/filter-state.service';
@@ -30,7 +29,7 @@ import { MatFormField } from "@angular/material/form-field";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() filters: any = {};
   @Input() search: string = '';
   @Output() dataUpdate = new EventEmitter<any>();
@@ -50,7 +49,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChang
   currentSearchTerm: string = '';
   delaySearch: boolean = true;
   timer: any;
-  @Input() query: Object | undefined; // query params ('sort', 'aggs', 'filters', '_source', 'from_')
 
   constructor(private dataService: ApiDataService, private filterStateService: FilterStateService) {}
 
@@ -68,12 +66,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy, OnChang
     this.sort?.sortChange.subscribe(() => {
       this.sortUpdate.emit([this.sort?.active, this.sort?.direction]);
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['filters'] || changes['search']) {
-      this.loadData(this.filters, this.search);
-    }
   }
 
   loadData(filters: any = {}, search: string = '') {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 import { FilterStateService } from "../services/filter-state.service";
 import { TableComponent } from "../shared/table/table.component";
@@ -10,17 +9,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FilterComponent } from "../shared/filter/filter.component";
 import { ActiveFilterComponent } from '../shared/active-filter/active-filter.component';
+import {HeaderComponent} from "../shared/header/header.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    TableComponent,
-    FilterComponent,
-    ActiveFilterComponent
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        TableComponent,
+        FilterComponent,
+        ActiveFilterComponent,
+        HeaderComponent
+    ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -91,9 +92,6 @@ export class DashboardComponent implements OnInit {
 
     this.filter_field = filters;
     this.query.filters = filters;
-    if (params['searchTerm']) {
-      this.query.search = params.searchTerm;
-    }
     if (params['sortTerm'] && params['sortDirection']) {
       this.query.sort = [params['sortTerm'], params['sortDirection']];
     }

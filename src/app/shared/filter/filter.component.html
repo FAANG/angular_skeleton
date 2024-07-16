@@ -1,9 +1,9 @@
 <mat-card class="filter-card">
-    <h6 class="filter-header item">
+    <div class="filter-header item">
         {{title}}
         <i class="material-icons float-right" *ngIf="aggregation && aggregation.length > (filterSize ?? 0) && isCollapsed !== undefined && isCollapsed" (click)="toggleCollapse()">add</i>
         <i class="material-icons float-right" *ngIf="aggregation && aggregation.length > (filterSize ?? 0) && isCollapsed !== undefined && !isCollapsed" (click)="toggleCollapse()">remove</i>
-    </h6>
+    </div>
     <div [ngClass]="{'long-list': (itemLimit ?? 0) > (filterSize ?? 0)}">
         <ng-container *ngFor="let aggr of aggregation; let i = index">
             <div class="d-flex justify-content-between align-items-center item"

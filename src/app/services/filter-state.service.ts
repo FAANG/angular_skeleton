@@ -7,13 +7,6 @@ interface QueryParams {
   [key: string]: any;
 }
 
-interface ActiveFilters {
-  sex: string[];
-  organism: string[];
-  breed: string[];
-  standard: string[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -31,9 +24,6 @@ export class FilterStateService {
           params[key] = data[key];
         }
       }
-      if (queryObj['search']) {
-        params['searchTerm'] = queryObj['search'];
-      }
       if (queryObj['sort']) {
         params['sortTerm'] = queryObj['sort'][0];
         params['sortDirection'] = queryObj['sort'][1];
@@ -46,7 +36,7 @@ export class FilterStateService {
   setUpAggregationFilters(params: QueryParams) {
     const filters: { [key: string]: any[] } = {};
     for (const key in params) {
-      if (key !== 'searchTerm' && key !== 'sortTerm' && key !== 'sortDirection' && key !== 'pageIndex') {
+      if (key !== 'sortTerm' && key !== 'sortDirection' && key !== 'pageIndex') {
         if (Array.isArray(params[key])) {
           filters[key] = params[key];
           for (const value of params[key]) {
@@ -71,20 +61,5 @@ export class FilterStateService {
     }
     this.aggregationService.current_active_filters = [];
     this.filtersSubject.next({});
-  }
-
-  updateActiveFilters() {
-    const filters = this.getCurrentFilters();
-    this.filtersSubject.next(filters);
-  }
-
-  private getCurrentFilters() {
-    const filters: { [key in keyof ActiveFilters]?: string[] } = {};
-    for (const key in this.aggregationService.active_filters) {
-      if ((this.aggregationService.active_filters as any)[key].length > 0) {
-        filters[key as keyof ActiveFilters] = (this.aggregationService.active_filters as any)[key];
-      }
-    }
-    return filters;
   }
 }
