@@ -24,3 +24,7 @@ button:focus {
 .igv-container {
     z-index: 1;
 }
+
+body {
+    margin: 0;
+}
