@@ -1,6 +1,0 @@
-<div *ngIf="imgSrc; else errorTemplate">
-    <img ngSrc="imgSrc" width="1000" height="800" alt="Loaded Image">
-</div>
-<ng-template #errorTemplate>
-    <div *ngIf="loadingError">{{ loadingError }}</div>
-</ng-template>
