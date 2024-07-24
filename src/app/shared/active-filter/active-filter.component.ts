@@ -4,10 +4,10 @@ import { AggregationService } from '../../services/aggregation.service';
 import { FilterStateService } from "../../services/filter-state.service";
 
 interface AggregationData {
-  sex: [string, number][];
-  organism: [string, number][];
-  breed: [string, number][];
-  standard: [string, number][];
+  name: [string, number][];
+  position: [string, number][];
+  weight: [string, number][];
+  symbol: [string, number][];
 }
 
 @Component({
@@ -21,7 +21,7 @@ interface AggregationData {
 })
 export class ActiveFilterComponent implements OnInit {
   aggs: string[] = [];
-  data: AggregationData = { sex: [], organism: [], breed: [], standard: [] };
+  data: AggregationData = { name: [], position: [], weight: [], symbol: [] };
 
   constructor(private aggregationService: AggregationService) { }
 

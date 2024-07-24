@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from "rxjs";
 
 interface AggregationData {
-  sex: [string, number][];
-  organism: [string, number][];
-  breed: [string, number][];
-  standard: [string, number][];
+  name: [string, number][];
+  position: [string, number][];
+  weight: [string, number][];
+  symbol: [string, number][];
 }
 
 interface ActiveFilters {
-  sex: string[];
-  organism: string[];
-  breed: string[];
-  standard: string[];
+  name: string[];
+  position: string[];
+  weight: string[];
+  symbol: string[];
 }
 
 @Injectable({
@@ -20,16 +20,16 @@ interface ActiveFilters {
 })
 export class AggregationService {
   active_filters: ActiveFilters = {
-    sex: [],
-    organism: [],
-    breed: [],
-    standard: []
+    name: [],
+    position: [],
+    weight: [],
+    symbol: []
   };
 
   current_active_filters: string[] = [];
 
   data: BehaviorSubject<AggregationData> = new BehaviorSubject<AggregationData>(
-      { sex: [], organism: [], breed: [], standard: [] }
+    { name: [], position: [], weight: [], symbol: [] }
   );
   field = new Subject<ActiveFilters>();
 
@@ -37,10 +37,10 @@ export class AggregationService {
 
   getAggregations(data: any) {
     let aggregatedData: AggregationData = {
-      sex: [],
-      organism: [],
-      breed: [],
-      standard: []
+      name: [],
+      position: [],
+      weight: [],
+      symbol: []
     };
 
     const keys = Object.keys(aggregatedData) as (keyof AggregationData)[];

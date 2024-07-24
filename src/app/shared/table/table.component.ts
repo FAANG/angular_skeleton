@@ -34,13 +34,12 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() search: string = '';
   @Output() dataUpdate = new EventEmitter<any>();
   @Output() sortUpdate = new EventEmitter<any>();
-  displayedColumns: string[] = ['biosample_id', 'sex', 'organism', 'breed', 'standard'];
+  displayedColumns: string[] = ['name', 'position', 'weight', 'symbol'];
   columnHeaders: { [key: string]: string } = {
-    'biosample_id': 'BioSample ID',
-    'sex': 'Sex',
-    'organism': 'Organism',
-    'breed': 'Breed',
-    'standard': 'Standard'
+    'name': 'Name',
+    'position': 'Position',
+    'weight': 'Weight',
+    'symbol': 'Symbol'
   };
   dataSource = new MatTableDataSource<Sample>();
   private filtersSubscription: Subscription | undefined;

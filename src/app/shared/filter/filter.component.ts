@@ -5,10 +5,10 @@ import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { MatCard } from '@angular/material/card';
 
 interface AggregationData {
-    sex: [string, number][];
-    organism: [string, number][];
-    breed: [string, number][];
-    standard: [string, number][];
+    name: [string, number][];
+    position: [string, number][];
+    weight: [string, number][];
+    symbol: [string, number][];
 }
 
 @Component({
@@ -40,14 +40,14 @@ export class FilterComponent implements OnInit, OnDestroy {
         this.itemLimit = this.filterSize;
         this.subscription = this.aggregationService.data.subscribe(
             (data: AggregationData) => {
-                if (this.title === 'Sex') {
-                    this.aggregation = data.sex;
-                } else if (this.title === 'Organism') {
-                    this.aggregation = data.organism;
-                } else if (this.title === 'Breed') {
-                    this.aggregation = data.breed;
-                } else if (this.title === 'Standard') {
-                    this.aggregation = data.standard;
+                if (this.title === 'Name') {
+                    this.aggregation = data.name;
+                } else if (this.title === 'Position') {
+                    this.aggregation = data.position;
+                } else if (this.title === 'Weight') {
+                    this.aggregation = data.weight;
+                } else if (this.title === 'Symbol') {
+                    this.aggregation = data.symbol;
                 }
                 this.cdRef.detectChanges();
             }
@@ -57,20 +57,20 @@ export class FilterComponent implements OnInit, OnDestroy {
     onButtonClick(key: string, title: string | undefined) {
         let data_key: keyof AggregationData | null = null;
         switch (title) {
-            case 'Sex': {
-                data_key = 'sex';
+            case 'Name': {
+                data_key = 'name';
                 break;
             }
-            case 'Organism': {
-                data_key = 'organism';
+            case 'Position': {
+                data_key = 'position';
                 break;
             }
-            case 'Breed': {
-                data_key = 'breed';
+            case 'Weight': {
+                data_key = 'weight';
                 break;
             }
-            case 'Standard': {
-                data_key = 'standard';
+            case 'Symbol': {
+                data_key = 'symbol';
                 break;
             }
         }

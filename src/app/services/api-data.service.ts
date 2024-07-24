@@ -14,10 +14,10 @@ export class ApiDataService {
         const dataSource = new MatTableDataSource<Sample>(samples);
 
         const filterToColumnMap: { [key: string]: keyof Sample } = {
-            sex: 'sex',
-            organism: 'organism',
-            breed: 'breed',
-            standard: 'standard'
+            position: 'position',
+            name: 'name',
+            weight: 'weight',
+            symbol: 'symbol'
         };
 
         dataSource.filterPredicate = (data: Sample, filter: string) => {
