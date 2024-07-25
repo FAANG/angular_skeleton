@@ -1,100 +1,46 @@
 <app-header (onClickEvent)="toggle()"></app-header>
 
-<mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" [mode]="mobileQuery.matches ? 'over' : 'side'"
-               [opened]="opened">
-    <mat-card class="example-card" appearance="raised">
-      <mat-card-header>
-        <mat-card-title>Filter Group 1</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Filter value 1</p>
-        <p>Filter value 2</p>
-        <p>Filter value 3</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="example-card" appearance="raised">
-      <mat-card-header>
-        <mat-card-title>Filter Group 1</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Filter value 1</p>
-        <p>Filter value 2</p>
-        <p>Filter value 3</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="example-card" appearance="raised">
-      <mat-card-header>
-        <mat-card-title>Filter Group 1</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Filter value 1</p>
-        <p>Filter value 2</p>
-        <p>Filter value 3</p>
-      </mat-card-content>
-    </mat-card>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-    </mat-form-field>
-
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="test1">
-        <th mat-header-cell *matHeaderCellDef> Test 1 </th>
-        <td mat-cell *matCellDef="let element"> {{element.test1}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="test2">
-        <th mat-header-cell *matHeaderCellDef> Test 2 </th>
-        <td mat-cell *matCellDef="let element"> {{element.test2}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="test3">
-        <th mat-header-cell *matHeaderCellDef> Test 3 </th>
-        <td mat-cell *matCellDef="let element"> {{element.test3}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="test4">
-        <th mat-header-cell *matHeaderCellDef> Test 4 </th>
-        <td mat-cell *matCellDef="let element"> {{element.test4}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
-    </table>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="main-container">
+  <div class="content">
+    <div class="filters">
+      <app-filter
+        title="Name"
+        [filterSize]="2"
+        [aggregationService]="aggregationService"
+      ></app-filter>
+      <app-filter
+        title="Position"
+        [filterSize]="3"
+        [aggregationService]="aggregationService"
+      ></app-filter>
+      <app-filter
+        title="Weight"
+        [filterSize]="3"
+        [aggregationService]="aggregationService"
+      ></app-filter>
+      <app-filter
+        title="Symbol"
+        [filterSize]="6"
+        [aggregationService]="aggregationService"
+      ></app-filter>
+    </div>
+    <div class="table-section">
+      @if (hasActiveFilters()) {
+      <div class="table-header">
+        <app-active-filter
+          [aggregationService]="aggregationService"
+        ></app-active-filter>
+        <button mat-raised-button (click)="removeFilter()">
+          Remove all filters
+        </button>
+        <hr />
+      </div>
+      }
+      <div class="table-responsive">
+        <app-table [dataService]="dataService"></app-table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <app-footer></app-footer>

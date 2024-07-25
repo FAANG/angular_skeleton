@@ -1,63 +1,103 @@
-import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
-import {MatCardModule} from "@angular/material/card";
-import {MatTableModule, MatTableDataSource} from "@angular/material/table";
-import {HeaderComponent} from "../shared/header/header.component";
-import {MatInputModule} from "@angular/material/input";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {FooterComponent} from "../shared/footer/footer.component";
-import {MediaMatcher} from "@angular/cdk/layout";
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  test1: string,
-  test2: string,
-  test3: string,
-  test4: string,
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4', },
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-];
+import { MediaMatcher } from '@angular/cdk/layout';
+import { NgIf } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { MockElementsAggregationService } from '../services/aggregation/mock-elements-aggregation.service';
+import { MockElementsApiDataService } from '../services/data/mock-elements-api-data.service';
+import { FilterStateService } from '../services/filter/filter-state.service';
+import { ActiveFilterComponent } from '../shared/active-filter/active-filter.component';
+import { FilterComponent } from '../shared/filter/filter.component';
+import { FooterComponent } from '../shared/footer/footer.component';
+import { HeaderComponent } from '../shared/header/header.component';
+import { TableComponent } from '../shared/table/table.component';
 
 @Component({
   selector: 'app-data-portal',
   standalone: true,
-  imports: [MatCardModule, MatTableModule, HeaderComponent, MatInputModule, MatFormFieldModule,
-    MatSidenavModule, FooterComponent],
+  imports: [
+    MatCardModule,
+    MatTableModule,
+    HeaderComponent,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSidenavModule,
+    FooterComponent,
+    FilterComponent,
+    ActiveFilterComponent,
+    MatIcon,
+    NgIf,
+    TableComponent,
+  ],
   templateUrl: './data-portal.component.html',
-  styleUrl: './data-portal.component.css'
+  styleUrls: ['./data-portal.component.css'],
+  providers: [MockElementsApiDataService, FilterStateService],
 })
-export class DataPortalComponent implements OnDestroy {
+export class DataPortalComponent implements OnInit, OnDestroy {
+  @ViewChild(TableComponent, { static: true }) tableServerComponent:
+    | TableComponent
+    | undefined;
+
+  filter_field: any;
+
+  aggrSubscription: Subscription | undefined;
+
+  query = {
+    sort: ['id_number', 'desc'],
+    _source: [],
+    filters: {},
+  };
   mobileQuery: MediaQueryList;
   opened = true;
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    protected aggregationService: MockElementsAggregationService,
+    public dataService: MockElementsApiDataService,
+    private filterStateService: FilterStateService
+  ) {
+    this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'test1', 'test2', 'test3', 'test4'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  ngOnInit(): void {
+    this.filterStateService.aggregationService = this.aggregationService;
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.titleService.setTitle('Data Portal');
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.filterStateService.resetFilter();
+      this.filter_field =
+        this.filterStateService.setUpAggregationFilters(params);
+    });
+    if (this.tableServerComponent) {
+      this.tableServerComponent.dataUpdate.subscribe((data) => {
+        this.aggregationService.getAggregations(data);
+      });
+    }
+    this.aggrSubscription = this.filterStateService.updateUrlParams(
+      this.query,
+      ['data_portal']
+    );
   }
 
   toggle() {
@@ -66,5 +106,27 @@ export class DataPortalComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  hasActiveFilters() {
+    if (typeof this.filter_field === 'undefined') {
+      return false;
+    }
+    for (const key of Object.keys(this.filter_field)) {
+      if (this.filter_field[key].length !== 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  removeFilter() {
+    this.filterStateService.resetFilter();
+    this.filter_field = {};
+    this.router.navigate(['data_portal'], {
+      queryParams: {},
+      replaceUrl: true,
+      skipLocationChange: false,
+    });
   }
 }

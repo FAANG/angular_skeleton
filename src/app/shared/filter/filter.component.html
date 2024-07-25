@@ -1,0 +1,27 @@
+<mat-card class="filter-card">
+  <div class="filter-header item">
+    {{ title }}
+    @if (aggregation && aggregation.length > filterSize && isCollapsed) {
+    <i class="material-icons float-right" (click)="toggleCollapse()">add</i>
+    }
+    @if (aggregation && aggregation.length > filterSize && !isCollapsed) {
+    <i class="material-icons float-right" (click)="toggleCollapse()">remove</i>
+    }
+  </div>
+  <div [ngClass]="{ 'long-list': itemLimit > filterSize }">
+    <ng-container *ngFor="let aggr of aggregation; let i = index">
+      @if (i < itemLimit && aggr[0] != '') {
+      <div
+        class="d-flex justify-content-between align-items-center item"
+        [ngClass]="{
+      active: aggregationService.current_active_filters.includes(aggr[0])
+      }"
+          (click)="onButtonClick(aggr[0], title)"
+        >
+      {{ aggr[0] }}
+      <span class="badge badge-secondary badge-pill">{{ aggr[1] }}</span>
+        </div>
+      }
+    </ng-container>
+  </div>
+</mat-card>
