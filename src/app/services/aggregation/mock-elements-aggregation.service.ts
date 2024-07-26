@@ -63,24 +63,21 @@ export class MockElementsAggregationService
       symbol: [],
     };
 
-    const keys = Object.keys(
-      aggregatedData
-    ) as (keyof AggregationDataInterface)[];
+    const keys = Object.keys(aggregatedData) as (keyof AggregationDataInterface)[];
 
-    for (const idx in data) {
-      let record = data[idx];
-      for (const col of keys) {
+    data.forEach((record: any) => {
+      keys.forEach((col) => {
         if (record[col]) {
-          let value = record[col];
-          let found = aggregatedData[col].find((item) => item[0] === value);
+          const value = record[col];
+          const found = aggregatedData[col].find((item) => item[0] === value);
           if (found) {
             found[1]++;
           } else {
             aggregatedData[col].push([value, 1]);
           }
         }
-      }
-    }
+      });
+    });
 
     this.data.next(aggregatedData);
   }

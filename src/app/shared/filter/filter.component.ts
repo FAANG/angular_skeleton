@@ -1,4 +1,4 @@
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -15,7 +15,7 @@ import AggregationServiceInterface, {
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [NgClass, MatCard, NgIf, NgForOf],
+  imports: [NgClass, MatCard, NgForOf],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css'],
 })
@@ -44,31 +44,9 @@ export class FilterComponent implements OnInit, OnDestroy {
     );
   }
 
-  onButtonClick(key: string, title: string | undefined) {
-    const data_key = this.aggregationService.filterMap[title || ''];
-    if (data_key) {
-      const index =
-        this.aggregationService.active_filters[data_key].indexOf(key);
-      if (index > -1) {
-        this.aggregationService.active_filters[data_key].splice(index, 1);
-      } else {
-        this.aggregationService.active_filters[data_key].push(key);
-      }
-
-      const active_filter_index =
-        this.aggregationService.current_active_filters.indexOf(key);
-      if (active_filter_index > -1) {
-        this.aggregationService.current_active_filters.splice(
-          active_filter_index,
-          1
-        );
-      } else {
-        this.aggregationService.current_active_filters.push(key);
-      }
-
-      this.aggregationService.field.next(
-        this.aggregationService.active_filters
-      );
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
@@ -77,9 +55,28 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.itemLimit = this.isCollapsed ? this.filterSize : 10000;
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+  onButtonClick(key: string, title: string | undefined) {
+    const data_key = this.aggregationService.filterMap[title || ''];
+    if (data_key) {
+      const isActiveInFilters = this.toggleFilter(this.aggregationService.active_filters[data_key], key);
+      const isActiveInCurrent = this.toggleFilter(this.aggregationService.current_active_filters, key);
+
+      if (!isActiveInFilters && !isActiveInCurrent) {
+        this.aggregationService.current_active_filters.push(key);
+      }
+
+      this.aggregationService.field.next(this.aggregationService.active_filters);
+    }
+  }
+
+  private toggleFilter(filters: string[], value: string): boolean {
+    const index = filters.indexOf(value);
+    if (index > -1) {
+      filters.splice(index, 1);
+      return true;
+    } else {
+      filters.push(value);
+      return false;
     }
   }
 }

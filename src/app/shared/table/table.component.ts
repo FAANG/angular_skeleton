@@ -20,7 +20,6 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MockElementsAggregationService } from '../../services/aggregation/mock-elements-aggregation.service';
 import DataServiceInterface, {
@@ -70,7 +69,6 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   timer: NodeJS.Timeout | undefined;
 
   constructor(
-    private router: Router,
     private aggregationService: MockElementsAggregationService,
     private filterStateService: FilterStateService
   ) {}
@@ -100,17 +98,17 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  ngOnDestroy() {
+    if (this.filtersSubscription) {
+      this.filtersSubscription.unsubscribe();
+    }
+  }
+
   loadData(filters: any = {}, search: string = '') {
     this.dataService.getData(filters, search).subscribe((data) => {
       this.dataSource.data = data;
       this.dataUpdate.emit(this.dataSource.data);
     });
-  }
-
-  ngOnDestroy() {
-    if (this.filtersSubscription) {
-      this.filtersSubscription.unsubscribe();
-    }
   }
 
   searchChanged(event: KeyboardEvent) {

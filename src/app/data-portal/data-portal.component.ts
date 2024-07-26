@@ -1,5 +1,4 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { NgIf } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -39,7 +38,6 @@ import { TableComponent } from '../shared/table/table.component';
     FilterComponent,
     ActiveFilterComponent,
     MatIcon,
-    NgIf,
     TableComponent,
   ],
   templateUrl: './data-portal.component.html',
@@ -57,7 +55,6 @@ export class DataPortalComponent implements OnInit, OnDestroy {
 
   query = {
     sort: ['id_number', 'desc'],
-    _source: [],
     filters: {},
   };
   mobileQuery: MediaQueryList;
@@ -86,8 +83,7 @@ export class DataPortalComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Data Portal');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.filterStateService.resetFilter();
-      this.filter_field =
-        this.filterStateService.setUpAggregationFilters(params);
+      this.filter_field = this.filterStateService.setUpAggregationFilters(params);
     });
     if (this.tableServerComponent) {
       this.tableServerComponent.dataUpdate.subscribe((data) => {
@@ -100,24 +96,12 @@ export class DataPortalComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggle() {
-    this.opened = !this.opened;
-  }
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
   hasActiveFilters() {
-    if (typeof this.filter_field === 'undefined') {
-      return false;
-    }
-    for (const key of Object.keys(this.filter_field)) {
-      if (this.filter_field[key].length !== 0) {
-        return true;
-      }
-    }
-    return false;
+    return Object.values(this.filter_field || {}).some((field: any) => field.length > 0);
   }
 
   removeFilter() {

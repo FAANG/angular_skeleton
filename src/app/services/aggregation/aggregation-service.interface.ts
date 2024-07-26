@@ -23,6 +23,5 @@ export default interface AggregationServiceInterface {
 
   readonly filterMap: FilterMap;
 
-  //data: BehaviorSubject<AggregationDataInterface>
   getAggregations(data: any): void;
 }
