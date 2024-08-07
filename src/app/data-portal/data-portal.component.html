@@ -6,36 +6,60 @@
                [opened]="opened">
     <mat-card class="example-card" appearance="raised">
       <mat-card-header>
-        <mat-card-title>Name</mat-card-title>
+        <div class="header-content">
+          <mat-card-title>Name</mat-card-title>
+          @if (countedFilterFields['name'].length > itemLimit['name']) {
+            <i class="material-icons toggle-icon" (click)="toggleFilterView('name')">
+              {{ expandedFilters['name'] ? 'remove' : 'add' }}
+            </i>
+          }
+        </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of countedFilterFields['name']; track el.id) {
+        @for (el of getVisibleFilters('name'); track el.id) {
           <button mat-button (click)="onFilterSelect('name', el.id)" [ngClass]="{ 'active-filter': isFilterActive('name', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
     </mat-card>
     <mat-card class="example-card" appearance="raised">
       <mat-card-header>
-        <mat-card-title>Weight</mat-card-title>
+        <div class="header-content">
+          <mat-card-title>Weight</mat-card-title>
+          @if (countedFilterFields['weight'].length > itemLimit['weight']) {
+            <i class="material-icons toggle-icon" (click)="toggleFilterView('weight')">
+              {{ expandedFilters['weight'] ? 'remove' : 'add' }}
+            </i>
+          }
+        </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of countedFilterFields['weight']; track el.id) {
+        @for (el of getVisibleFilters('weight'); track el.id) {
           <button mat-button (click)="onFilterSelect('weight', el.id)" [ngClass]="{ 'active-filter': isFilterActive('weight', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
     </mat-card>
     <mat-card class="example-card" appearance="raised">
       <mat-card-header>
-        <mat-card-title>Symbol</mat-card-title>
+        <div class="header-content">
+          <mat-card-title>Symbol</mat-card-title>
+          @if (countedFilterFields['symbol'].length > itemLimit['symbol']) {
+            <i class="material-icons toggle-icon" (click)="toggleFilterView('symbol')">
+              {{ expandedFilters['symbol'] ? 'remove' : 'add' }}
+            </i>
+          }
+        </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of countedFilterFields['symbol']; track el.id) {
+        @for (el of getVisibleFilters('symbol'); track el.id) {
           <button mat-button (click)="onFilterSelect('symbol', el.id)" [ngClass]="{ 'active-filter': isFilterActive('symbol', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
@@ -43,11 +67,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-drawer-container class="example-table">
+    <mat-drawer-container class="table-container">
       <mat-card-content class="filter-buttons">
         @for (el of getSelectedFilterList(); track el.key) {
           <div>
-            <button mat-raised-button (click)="clearFilter(el.key)" class="filter-button">
+            <button mat-button (click)="clearFilter(el.key)" [ngClass]="{ 'active-filter': isFilterActive(el.key, el.value)}">
               <div style="display: flex; align-items: center;">
                   <div>{{ el.value }}</div>
                   <i class="material-icons">highlight_off</i>
@@ -56,7 +80,7 @@
           </div>
         }
         @if (getSelectedFilterList().length > 0) {
-          <button mat-raised-button (click)="clearFilters()" class="clear-filters-button">
+          <button mat-button (click)="clearFilters()" class="clear-filters-button">
             Remove all filters
           </button>
         }

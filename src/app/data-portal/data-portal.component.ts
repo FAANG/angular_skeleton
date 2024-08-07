@@ -10,6 +10,7 @@ import {MediaMatcher} from "@angular/cdk/layout";
 import {NgClass} from '@angular/common';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
 
 export interface PeriodicElement {
   name: string;
@@ -51,7 +52,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     NgClass,
     MatPaginator,
     MatPaginatorModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIcon
   ],
   templateUrl: './data-portal.component.html',
   styleUrls: ['./data-portal.component.css']
@@ -75,6 +77,17 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
   countedFilterFields: Record<string, { id: string, value: number }[]> = {};
   selectedFilters: Record<string, string | number> = {};
   searchTerm: string = '';
+  expandedFilters: Record<string, boolean> = {
+    name: false,
+    weight: false,
+    symbol: false,
+  };
+  filterSize = 5;
+  itemLimit: Record<string, number> = {
+    name: this.filterSize,
+    weight: this.filterSize,
+    symbol: this.filterSize,
+  };
 
   ngOnInit(): void {
     this.countFilterFields();
@@ -118,16 +131,6 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  applyFilter(event: Event) {
-    this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.applyColumnFilter();
-  }
-
-  onFilterSelect(column: string, value: string | number) {
-    this.selectedFilters[column] = value;
-    this.applyColumnFilter();
-  }
-
   setupFilterPredicate() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
       const parsedFilter = JSON.parse(filter);
@@ -152,6 +155,16 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
     this.countFilterFields()
   }
 
+  applyFilter(event: Event) {
+    this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.applyColumnFilter();
+  }
+
+  onFilterSelect(column: string, value: string | number) {
+    this.selectedFilters[column] = value;
+    this.applyColumnFilter();
+  }
+
   clearFilters() {
     this.searchTerm = '';
     this.selectedFilters = {};
@@ -169,5 +182,14 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
   clearFilter(key: string) {
     delete this.selectedFilters[key];
     this.applyColumnFilter();
+  }
+
+  toggleFilterView(filterKey: string): void {
+    this.expandedFilters[filterKey] = !this.expandedFilters[filterKey];
+  }
+
+  getVisibleFilters(filterKey: string) {
+    const filters = this.countedFilterFields[filterKey];
+    return this.expandedFilters[filterKey] ? filters : filters.slice(0, this.itemLimit[filterKey]);
   }
 }
