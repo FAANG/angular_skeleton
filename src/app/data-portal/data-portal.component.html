@@ -11,7 +11,8 @@
       <mat-card class="filter-content">
         @for (el of countedFilterFields['name']; track el.id) {
           <button mat-button (click)="onFilterSelect('name', el.id)" [ngClass]="{ 'active-filter': isFilterActive('name', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
@@ -23,7 +24,8 @@
       <mat-card class="filter-content">
         @for (el of countedFilterFields['weight']; track el.id) {
           <button mat-button (click)="onFilterSelect('weight', el.id)" [ngClass]="{ 'active-filter': isFilterActive('weight', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
@@ -35,7 +37,8 @@
       <mat-card class="filter-content">
         @for (el of countedFilterFields['symbol']; track el.id) {
           <button mat-button (click)="onFilterSelect('symbol', el.id)" [ngClass]="{ 'active-filter': isFilterActive('symbol', el.id) }">
-            {{ el.id }} {{ el.value}}
+            {{ el.id }}
+            <span class="badge">{{ el.value }}</span>
           </button>
         }
       </mat-card>
@@ -43,11 +46,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-drawer-container class="example-table">
+    <mat-drawer-container class="table-container">
       <mat-card-content class="filter-buttons">
         @for (el of getSelectedFilterList(); track el.key) {
           <div>
-            <button mat-raised-button (click)="clearFilter(el.key)" class="filter-button">
+            <button mat-button (click)="clearFilter(el.key)" [ngClass]="{ 'active-filter': isFilterActive(el.key, el.value)}">
               <div style="display: flex; align-items: center;">
                   <div>{{ el.value }}</div>
                   <i class="material-icons">highlight_off</i>
@@ -56,7 +59,7 @@
           </div>
         }
         @if (getSelectedFilterList().length > 0) {
-          <button mat-raised-button (click)="clearFilters()" class="clear-filters-button">
+          <button mat-button (click)="clearFilters()" class="clear-filters-button">
             Remove all filters
           </button>
         }

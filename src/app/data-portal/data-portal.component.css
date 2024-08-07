@@ -1,12 +1,13 @@
+.example-container {
+  width: auto;
+  height: 100%;
+  margin: 10px;
+}
+
 .example-card {
   margin-left: 5px;
   margin-bottom:15px;
   margin-right: 5px;
-  background-color: #DCEDF5;
-}
-
-table {
-  margin-right: 10px;
 }
 
 .mat-mdc-form-field {
@@ -14,22 +15,38 @@ table {
   width: 100%;
 }
 
-.example-container {
-  width: auto;
-  height: 100%;
-  margin: 10px;
+mat-card-header {
+  padding-bottom: 16px;
 }
 
-.example-table {
+.filter-content button {
+  border-radius: 4px;
+}
+
+.filter-content .badge {
+  background-color: blue;
+  color: white;
+  width: 4em;
+  padding: 0.4em 0.6em 0.4em 0.6em;
+  border-radius: 7px;
+}
+
+.filter-content button.active-filter {
+  background-color: blue;
+  color: white;
+}
+
+.filter-content button.active-filter .badge {
+  background-color: white;
+  color: blue;
+}
+
+.table-container {
   padding-left: 20px;
 }
 
 mat-card-content {
   padding-left: 0;
-}
-
-mat-card-header {
-  padding-bottom: 16px;
 }
 
 .filter-buttons {
@@ -38,16 +55,19 @@ mat-card-header {
   font-size: 14px;
 }
 
-.filter-button {
+.filter-buttons button {
+  margin-left: 5px;
+  border-radius: 4px;
+  background-color: blue;
+  color: white;
+}
+
+.filter-buttons .clear-filters-button {
   margin-left: 5px;
   font-size: 14px;
-  background-color: #477AAF;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s;
+  background-color: white;
+  color: black;
 }
 
 i {
@@ -56,32 +76,6 @@ i {
   vertical-align: middle;
 }
 
-.clear-filters-button {
-  margin-left: 5px;
-  font-size: 14px;
-  background-color: white;
-  color: black;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s;
-}
-
-.filter-content button {
-  display: block;
-  width: 100%;
-  background-color: #ffffff !important;
-  color: #000000;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
-  text-align: left;
-  padding: 0.75rem 1.25rem;
-  margin: 0;
-  transition: background-color 0.3s;
-}
-
-.filter-content button.active-filter {
-  background-color: #477aaf !important;
-  color: white !important;
+table {
+  margin-right: 10px;
 }
