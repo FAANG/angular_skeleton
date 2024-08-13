@@ -7,7 +7,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FooterComponent} from "../shared/footer/footer.component";
 import {MediaMatcher} from "@angular/cdk/layout";
-import {NgClass} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -34,9 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
-  {position: 12, name: 'Neon', weight: 20.1797, symbol: 'Ne', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'}
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'}
 ];
 
 @Component({
@@ -55,7 +53,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatPaginatorModule,
     MatButtonModule,
     MatIcon,
-    ScrollingModule
+    ScrollingModule,
+    NgIf
   ],
   templateUrl: './data-portal.component.html',
   styleUrls: ['./data-portal.component.css']
@@ -76,19 +75,23 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
-  countedFilterFields: Record<string, { id: string, value: number }[]> = {};
+  countedFilters: Record<string, { id: string, value: number }[]> = {};
   selectedFilters: Record<string, string | number> = {};
   searchTerm: string = '';
-  expandedFilters: Record<string, boolean> = {
-    name: false,
-    weight: false,
-    symbol: false,
+  expandedFilters: Record<string, boolean> = { name: false, weight: false, symbol: false };
+  visibleFilters: Record<string, any[]> = { name: [], weight: [], symbol: [] };
+  filterHeightDefault = 250;
+  filterHeightMax = 350;
+  filterItemSize = 50;
+  filterHeight: Record<string, number> = {
+    name: this.filterHeightDefault,
+    weight: this.filterHeightDefault,
+    symbol: this.filterHeightDefault
   };
-  filterSize = 5;
-  itemLimit: Record<string, number> = {
-    name: this.filterSize,
-    weight: this.filterSize,
-    symbol: this.filterSize,
+  filtersLimit: Record<string, number> = {
+    name: 5,
+    weight: 5,
+    symbol: 5,
   };
 
   ngOnInit(): void {
@@ -129,7 +132,11 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
         columnValues.push({ id: key, value: uniqueValues[key] });
       }
 
-      this.countedFilterFields[column] = columnValues;
+      this.countedFilters[column] = columnValues;
+    });
+
+    ['name', 'weight', 'symbol'].forEach(filterKey => {
+      this.updateVisibleFilters(filterKey);
     });
   }
 
@@ -154,7 +161,7 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
   applyColumnFilter() {
     const combinedFilter = JSON.stringify({ search: this.searchTerm, filters: this.selectedFilters });
     this.dataSource.filter = combinedFilter;
-    this.countFilterFields()
+    this.countFilterFields();
   }
 
   applyFilter(event: Event) {
@@ -188,10 +195,14 @@ export class DataPortalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleFilterView(filterKey: string): void {
     this.expandedFilters[filterKey] = !this.expandedFilters[filterKey];
+    this.updateVisibleFilters(filterKey);
   }
 
-  getVisibleFilters(filterKey: string) {
-    const filters = this.countedFilterFields[filterKey];
-    return this.expandedFilters[filterKey] ? filters : filters.slice(0, this.itemLimit[filterKey]);
+  updateVisibleFilters(filterKey: string) {
+    const filters = this.expandedFilters[filterKey] ? this.countedFilters[filterKey] : this.countedFilters[filterKey].slice(0, this.filtersLimit[filterKey]);
+    this.visibleFilters[filterKey] = filters;
+    this.filterHeight[filterKey] = Math.min(
+      filters.length * this.filterItemSize, this.expandedFilters[filterKey] ? this.filterHeightMax : this.filterHeightDefault
+    );
   }
 }
