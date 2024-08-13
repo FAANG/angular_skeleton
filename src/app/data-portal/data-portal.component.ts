@@ -11,6 +11,7 @@ import {NgClass} from '@angular/common';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 export interface PeriodicElement {
   name: string;
@@ -53,7 +54,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatPaginator,
     MatPaginatorModule,
     MatButtonModule,
-    MatIcon
+    MatIcon,
+    ScrollingModule
   ],
   templateUrl: './data-portal.component.html',
   styleUrls: ['./data-portal.component.css']

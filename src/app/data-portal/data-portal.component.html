@@ -16,12 +16,14 @@
         </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of getVisibleFilters('name'); track el.id) {
-          <button mat-button (click)="onFilterSelect('name', el.id)" [ngClass]="{ 'active-filter': isFilterActive('name', el.id) }">
-            {{ el.id }}
-            <span class="badge">{{ el.value }}</span>
-          </button>
-        }
+        <cdk-virtual-scroll-viewport appendOnly itemSize="50" [style.height.px]="expandedFilters['name'] ? 350 : 250" class="example-viewport">
+          <div *cdkVirtualFor="let el of getVisibleFilters('name')" class="example-item">
+            <button (click)="onFilterSelect('name', el.id)" [ngClass]="{ 'active-filter': isFilterActive('name', el.id) }">
+              <span> {{ el.id }} </span>
+              <span class="badge">{{ el.value }}</span>
+            </button>
+          </div>
+        </cdk-virtual-scroll-viewport>
       </mat-card>
     </mat-card>
     <mat-card class="example-card" appearance="raised">
@@ -36,12 +38,14 @@
         </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of getVisibleFilters('weight'); track el.id) {
-          <button mat-button (click)="onFilterSelect('weight', el.id)" [ngClass]="{ 'active-filter': isFilterActive('weight', el.id) }">
-            {{ el.id }}
-            <span class="badge">{{ el.value }}</span>
-          </button>
-        }
+        <cdk-virtual-scroll-viewport appendOnly itemSize="50" [style.height.px]="expandedFilters['weight'] ? 350 : 250" class="example-viewport">
+          <div *cdkVirtualFor="let el of getVisibleFilters('weight')" class="example-item">
+            <button (click)="onFilterSelect('weight', el.id)" [ngClass]="{ 'active-filter': isFilterActive('weight', el.id) }">
+              <span> {{ el.id }} </span>
+              <span class="badge">{{ el.value }}</span>
+            </button>
+          </div>
+        </cdk-virtual-scroll-viewport>
       </mat-card>
     </mat-card>
     <mat-card class="example-card" appearance="raised">
@@ -56,12 +60,14 @@
         </div>
       </mat-card-header>
       <mat-card class="filter-content">
-        @for (el of getVisibleFilters('symbol'); track el.id) {
-          <button mat-button (click)="onFilterSelect('symbol', el.id)" [ngClass]="{ 'active-filter': isFilterActive('symbol', el.id) }">
-            {{ el.id }}
-            <span class="badge">{{ el.value }}</span>
-          </button>
-        }
+        <cdk-virtual-scroll-viewport appendOnly itemSize="50" [style.height.px]="expandedFilters['symbol'] ? 350 : 250" class="example-viewport">
+          <div *cdkVirtualFor="let el of getVisibleFilters('symbol')" class="example-item">
+            <button (click)="onFilterSelect('symbol', el.id)" [ngClass]="{ 'active-filter': isFilterActive('symbol', el.id) }">
+              <span> {{ el.id }} </span>
+              <span class="badge">{{ el.value }}</span>
+            </button>
+          </div>
+        </cdk-virtual-scroll-viewport>
       </mat-card>
     </mat-card>
   </mat-sidenav>
