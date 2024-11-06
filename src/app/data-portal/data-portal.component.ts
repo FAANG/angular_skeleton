@@ -7,11 +7,12 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {FooterComponent} from "../shared/footer/footer.component";
 import {MediaMatcher} from "@angular/cdk/layout";
-import {NgClass, NgIf} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {RouterLink} from "@angular/router";
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +25,7 @@ export interface PeriodicElement {
   test4: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+export const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', test1: 'test1', test2: 'test2', test3: 'test3', test4: 'test4'},
@@ -54,7 +55,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatButtonModule,
     MatIcon,
     ScrollingModule,
-    NgIf
+    RouterLink
   ],
   templateUrl: './data-portal.component.html',
   styleUrls: ['./data-portal.component.css']

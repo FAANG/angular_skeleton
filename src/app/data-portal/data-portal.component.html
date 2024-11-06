@@ -109,7 +109,9 @@
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element">
+            <a [routerLink]="['/data_portal', element.name]">{{element.name}}</a>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
