@@ -1,0 +1,14 @@
+.detail-container {
+  padding: 20px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 100px;
+  row-gap: 10px;
+}
+
+dt {
+  font-weight: bold;
+}
